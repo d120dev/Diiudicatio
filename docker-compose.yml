@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=d120-diiu
+      - POSTGRES_PASSWORD=d120-diiu
+      - POSTGRES_DB=diiudicatio
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U d120-diiu -d diiudicatio"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 60s
+volumes:
+  db:
