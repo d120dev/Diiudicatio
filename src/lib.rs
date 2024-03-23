@@ -19,10 +19,10 @@ pub async fn diiudicatio_run() {
             .wrap(NormalizePath::new(TrailingSlash::Trim))
     })
     .bind(("127.0.0.1", 8000))
-    .unwrap()
+    .expect(&format!("could not bind to {}", 8000))
     .run()
     .await
-    .unwrap();
+    .expect(&format!("failed to run server"));
 }
 
 #[must_use]
