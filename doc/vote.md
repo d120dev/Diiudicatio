@@ -8,7 +8,7 @@ $$
 \text{Initial States} &= \{\text{Created}\} \\
 \text{Accepted States} &= \{\text{Deleted}, \text{Accepted}, \text{Rejected}, \text{Archived}, \text{Redacted}, \text{Deleted}\} \\
 \text{Alphabet} &= \{modify, open, close_{accept}, close_{reject}, archive, delete, redact\} \\
-\text{Transitions} &= \{ \\
+\text{Transitions} &= \lbrace \\
     & \qquad (\text{Created}, modify, \text{Created}) \\
     & \qquad (\text{Created}, delete, \text{Deleted}) \\
     & \qquad (\text{Created}, open, \text{Open}) \\
@@ -18,6 +18,6 @@ $$
     & \qquad (\text{Archived}, redact, \text{Redacted}) \\
     & \qquad (\text{Open}, close_{reject}, \text{Rejected}) \\
     & \qquad (\text{Rejected}, redact, \text{Redacted}) \\
-&\quad \} \\
+&\quad \rbrace \\
 \end{align*}
 $$
