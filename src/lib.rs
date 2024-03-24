@@ -4,12 +4,14 @@
 
 use actix_web::{
     middleware::{Compress, Logger, NormalizePath, TrailingSlash},
-    web::Data,
+    web::{scope, Data},
     App, HttpServer,
 };
 use dotenv::var;
 use log::info;
 use sqlx::PgPool;
+
+mod vote;
 
 struct AppData {
     pub _db: PgPool,
@@ -35,7 +37,7 @@ pub async fn diiudicatio_run() {
             .app_data(Data::new(AppData {
                 _db: postgres.clone(),
             }))
-        // .service(scope("/{vote_scope}").configure(vote::configure))
+            .service(scope("/{vote_scope}").service(scope("/vote").configure(vote::configure)))
     })
     .bind(("0.0.0.0", 8000))
     .expect(&format!("could not bind to {}", 8000))
