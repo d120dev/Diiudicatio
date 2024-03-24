@@ -37,7 +37,7 @@ pub async fn diiudicatio_run() {
             }))
         // .service(scope("/{vote_scope}").configure(vote::configure))
     })
-    .bind(("127.0.0.1", 8000))
+    .bind(("0.0.0.0", 8000))
     .expect(&format!("could not bind to {}", 8000))
     .run()
     .await
