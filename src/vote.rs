@@ -7,7 +7,57 @@ use actix_web::{
     web::{Path, ServiceConfig},
     HttpResponse, Responder,
 };
+use chrono::{DateTime, Utc};
 use log::info;
+use uuid::Uuid;
+
+struct Vote {
+    uuid: Uuid,
+    scope_id: u32,
+    short_id: Option<String>,
+    name: String,
+    text: String,
+    vote_type: VoteTypes,
+    required_majority: Option<Majorities>,
+    vote_state: VoteStates,
+    vote_access: VoteAccess,
+    remainder_time: DateTime<Utc>,
+    remainder_open: DateTime<Utc>,
+    remainder_close: DateTime<Utc>,
+    remainder_archive: DateTime<Utc>,
+    remainder_redact: DateTime<Utc>,
+}
+
+enum VoteTypes {
+    YesNo,
+    Archiving,
+    Redacting,
+    Options,
+    Alternative,
+}
+
+enum Majorities {
+    Relative,
+    Simple,
+    SimpleQualified { numerator: u16, denominator: u16 },
+    AbsoluteQualified { numerator: u16, denominator: u16 },
+}
+
+enum VoteStates {
+    Created,
+    Open,
+    Accepted,
+    Rejected,
+    Archived,
+    Redacted,
+    Deleted,
+}
+
+enum VoteAccess {
+    Open,
+    Protected(String),
+    Closed,
+}
 
 pub fn configure(cfg: &mut ServiceConfig) {
     cfg.service(show_current)
