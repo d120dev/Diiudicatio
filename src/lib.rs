@@ -46,10 +46,10 @@ pub async fn diiudicatio_run() {
             .service(scope("/{vote_scope}").service(scope("/vote").configure(vote::configure)))
     })
     .bind(("0.0.0.0", 8000))
-    .expect(&format!("could not bind to {}", 8000))
+    .unwrap_or_else(|_| panic!("could not bind to {}", 8000))
     .run()
     .await
-    .expect(&format!("failed to run server"));
+    .expect("failed to run server");
 }
 
 #[must_use]
