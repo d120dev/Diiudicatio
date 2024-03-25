@@ -2,11 +2,13 @@
 
 ## Vote State Machine
 
+![VoteStateMachine](./assets/vote_state.drawio.png)
+
 $$
 \begin{align*}
 \text{States} &=\{\text{Created}, \text{Open}, \text{Accepted}, \text{Rejected}, \text{Archived}, \text{Redacted}, \text{Deleted}\} \\
 \text{Initial States} &= \{\text{Created}\} \\
-\text{Accepted States} &= \{\text{Deleted}, \text{Accepted}, \text{Rejected}, \text{Archived}, \text{Redacted}, \text{Deleted}\} \\
+\text{Accepted States} &= \{\text{Accepted}, \text{Rejected}, \text{Archived}, \text{Redacted}, \text{Deleted}\} \\
 \text{Alphabet} &= \{modify, open, close_{accept}, close_{reject}, archive, delete, redact\} \\
 \text{Transitions} &= \lbrace \\
     & \qquad (\text{Created}, modify, \text{Created}) \\
