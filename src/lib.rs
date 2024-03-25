@@ -9,7 +9,7 @@ use actix_web::{
 };
 use dotenv::var;
 use log::info;
-use sqlx::PgPool;
+use sqlx::{migrate, PgPool};
 
 mod vote;
 
@@ -28,6 +28,12 @@ pub async fn diiudicatio_run() {
         .await
         .expect("cannot connect to PostgreSQL");
     info!("connected to database");
+
+    migrate!("./migrations")
+        .run(&postgres)
+        .await
+        .expect("database migrations failed");
+    info!("applied migrations");
 
     HttpServer::new(move || {
         App::new()
