@@ -2,6 +2,7 @@
  * Copyright (c) 2024 Jonathan "Nath" Schild. Licensed under the EUPL-1.2
  */
 
+use actix_cors::Cors;
 use actix_web::{
     middleware::{Compress, Logger, NormalizePath, TrailingSlash},
     web::{scope, Data},
@@ -36,7 +37,9 @@ pub async fn diiudicatio_run() {
     info!("applied migrations");
 
     HttpServer::new(move || {
+        let cors = Cors::permissive();
         App::new()
+            .wrap(cors)
             .wrap(Compress::default())
             .wrap(Logger::default())
             .wrap(NormalizePath::new(TrailingSlash::Trim))
